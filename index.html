@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="" />
+
+    <title>3d滚动</title>
+
+
+    <script src="./jquery-1.11.3.min.js" type="text/javascript"
+        charset="utf-8"></script>
+
+    <style>
+        /* // 3d滚动 */
+        .teachers_banner{width:1300px;height:800px;position:relative;overflow:hidden;margin: 0 auto;background: rgb(177, 232, 241)}
+
+        .teachers_banner ul li{ position: absolute; overflow: hidden;box-shadow: 0 0 20px #1d374d; left:520px; top: 250px; height: 335px; width: 275px; }
+        .teachers_banner ul li img{ width: 100%; height: 100%;}
+
+        .arrow .next,.arrow .prev{position:absolute;width:64px;top:38%;z-index:9;font:700 96px simsun;opacity:.3;color:#fff;cursor:pointer}
+        .arrow .prev{left:1px}
+        .arrow .next{right:1px}
+        .arrow .next:hover,.arrow .prev:hover{color:#00a0e9;opacity:1}
+    </style>
+</head>
+
+<body>
+
+    <div class="teachers_banner" id="YScroll">
+        <ul>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0921/10790855.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0921/1537510145729.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786349.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537429065279.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786301.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537428932906.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786287.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537428818112.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786283.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537428650783.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786231.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537428055876.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786179.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537427594256.jpeg">
+                </a>
+            </li>
+            <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786149.shtml"
+                    target="_blank" style="height:100%;">
+                    <img src="http://upload.cbg.cn/2018/0920/1537427236576.jpeg">
+                </a>
+            </li> 
+
+
+            <!-- <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0921/10790855.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0921/1537510145729.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786349.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537429065279.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786301.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537428932906.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786287.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537428818112.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786283.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537428650783.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786231.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537428055876.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786179.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537427594256.jpeg">
+            </a>
+        </li>
+        <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786149.shtml"
+                target="_blank" style="height:100%;">
+                <img src="http://upload.cbg.cn/2018/0920/1537427236576.jpeg">
+            </a>
+        </li>  -->
+
+
+        <!-- <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0921/10790855.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0921/1537510145729.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786349.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537429065279.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786301.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537428932906.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786287.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537428818112.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786283.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537428650783.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786231.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537428055876.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786179.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537427594256.jpeg">
+        </a>
+    </li>
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786149.shtml"
+            target="_blank" style="height:100%;">
+            <img src="http://upload.cbg.cn/2018/0920/1537427236576.jpeg">
+        </a>
+    </li> 
+    <li><a href="http://huodongzq.cbg.cn/hdbk/wmyjp/2018/0920/10786149.shtml"
+        target="_blank" style="height:100%;">
+        <img src="http://upload.cbg.cn/2018/0920/1537427236576.jpeg">
+        </a>
+        </li>  -->
+        
+        </ul>
+        <div class="arrow">
+                <div class="prev"><</div> 
+                <div class="next">></div>
+        </div>
+    </div>
+
+
+
+    <script src="./YScroll.js"></script>
+    <script type="text/javascript">
+
+        /* 自定义卡片配置文件 */
+        var datas = [
+            {'z-index': 8, opacity: 1, width: 275, height: 335, top: 293, left: 380},
+            {'z-index': 7, opacity: 0.9, width: 203,  height:  246, top:253, left:131},
+            {'z-index': 6, opacity: 0.8, width: 135,  height:  163, top: 193, left: 221},
+            {'z-index': 5, opacity: 0.7, width: 87,   height:  107, top: 126, left: 404},
+            {'z-index': 4, opacity: 0.6, width: 69,   height:  87, top: 100, left: 567},
+            {'z-index': 5, opacity: 0.7, width: 134,  height:  163, top: 87, left: 722},
+            {'z-index': 6, opacity: 0.8, width: 196,  height:  240,  top: 176, left: 946},
+            {'z-index': 7, opacity: 0.9, width: 253,  height:  305, top:287, left: 756}
+            ];
+
+        YScroll.init({
+            wrapper: '#YScroll',
+            a:440, //半径：宽
+            b:130, //半径：高
+            // centerX: 680,
+            // centerY: 253,
+            // sizeDatas: datas
+        });
+
+    </script>
+
+
+
+
+</body>
+
+</html>
