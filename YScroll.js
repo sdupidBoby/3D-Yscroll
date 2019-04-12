@@ -1,3 +1,8 @@
+/**
+ * Written by Mineo Okuda on 01/03/18.
+ * HAHAHA
+ * Released under the MIT license
+ */
 (function (root, factory) {
     'use strict';
 
@@ -73,12 +78,17 @@
         init: function (options) {
             this.settings = extend(defaults, options || {});
             this.wrapper = document.querySelector(this.settings.wrapper);
+
+            if (this.wrapper === "undefined") {
+                return false;
+            }
+
             this.sizeDatas = this.settings.sizeDatas;
 
             var wapperJQ = $(this.wrapper);
             self.conBox = $("ul li", wapperJQ);
-            self.nextBtn = $(this.settings.nextCell);
-            self.prevBtn = $(this.settings.prevCell);
+            self.nextBtn = $(this.settings.nextCell,wapperJQ);
+            self.prevBtn = $(this.settings.prevCell,wapperJQ);
 
             this.cardWidth = self.conBox.width();
             this.cardHeight = self.conBox.height();
@@ -89,9 +99,6 @@
                 this.settings.centerY = wapperJQ.height() / 2 * 0.65;
             }
 
-            if (this.wrapper === "undefined") {
-                return false;
-            }
             this.attachEvent();
             if (this.sizeDatas.length<=0) {
                 this.applyEllipse();   
@@ -116,8 +123,7 @@
             this.sizeDatas.unshift(first);
             this.animate();
         },
-        doPlay: function () {
-            /*自动播放*/
+        doPlay: function () {/*自动播放*/
             if (this.settings.autoPlay) {
                 clearInterval(this.timer);
                 var ws = this;
@@ -139,21 +145,17 @@
                     xCode = factor ? i : this.CardNumber - i;
 
                 switch (this.settings.style) {
-                    case 1:
+                    case 1: //尺寸系数 --1
                         {
-                            //尺寸系数 --1
                             scaleX = 1 - xCode * (factor ? cose1 *= 0.9 : cose1 /= 0.92);
                         }
                         break;
-                    case 2:
+                    case 2://尺寸系数 --2 -对称   i太大会导致尺寸过小
                         {
-                            //尺寸系数 --2 -对称   i太大会导致尺寸过小
                             scaleX = 1 - xCode * 0.12;
-                            if (scaleX < 0.2) {scaleX = lastScale;} //防止尺寸太小
-                            lastScale = scaleX;
+                            if (scaleX < 0.2) {scaleX = lastScale;} 
+                            lastScale = scaleX;//防止尺寸太小
                         }
-                    default:
-                        break;
                 }
                 var hudu = (Math.PI / 180) * (i * pnC),
                     x1 = this.settings.centerX - this.settings.a * Math.sin(hudu),
