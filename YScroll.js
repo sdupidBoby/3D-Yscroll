@@ -66,8 +66,7 @@
         this.wrapper = '';
         this.CardNumber = 0; //生成点的个数, 根据外部的li个数来确定
         this.arc = 360; //弧度: 默认360
-        this.cardWidth = 0, //卡片宽度
-        this.cardHeight = 0, //卡片高度
+        this.cardWidth = this.cardHeight = 0, //卡片宽高
         this.sizeDatas = [];
     };
     YScroll.prototype = {
@@ -119,8 +118,8 @@
             YScroll.animate();
         },
         prevCad: function () {
-            var first = this.sizeDatas.pop();
-            this.sizeDatas.unshift(first);
+            var last = this.sizeDatas.pop();
+            this.sizeDatas.unshift(last);
             this.animate();
         },
         doPlay: function () {/*自动播放*/
@@ -153,7 +152,7 @@
                     case 2://尺寸系数 --2 -对称   i太大会导致尺寸过小
                         {
                             scaleX = 1 - xCode * 0.12;
-                            if (scaleX < 0.2) {scaleX = lastScale;} 
+                            .2>scaleX && (scaleX = lastScale);
                             lastScale = scaleX;//防止尺寸太小
                         }
                 }
@@ -185,12 +184,9 @@
         },
         attachEvent: function () {
             var ws = this;
-            if (self.nextBtn) {
-                self.nextBtn.click(this.nextCad);
-            } /* 上下 两种处理方式，这里会丢失this */
-            if (self.prevBtn) {
-                self.prevBtn.click(this.prevCad.bind(this));
-            }
+            self.nextBtn && self.nextBtn.click(this.nextCad);
+             /* 上下 两种处理方式，这里会丢失this */
+            self.prevBtn && self.prevBtn.click(this.prevCad.bind(this));
             $(this.settings.wrapper).on({
                 mouseenter: function () {
                     $('.arrow').css('display', 'block');
