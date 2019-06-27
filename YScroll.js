@@ -1,7 +1,16 @@
 /**
- * Written by Mineo Okuda on 01/03/18.
- * HAHAHA
- * Released under the MIT license
+ @Name : 基于jq的3D滚动轮播图
+ @Author： sdupidBoby
+ @License：MIT
+
+ * Use:         
+ * YScroll.init({
+            wrapper: '#YScroll',
+            autoPlay: true,
+            a:440, //半径：宽
+            b:130, //半径：高
+    });
+ * 
  */
 (function (root, factory) {
     'use strict';
@@ -26,6 +35,7 @@
         interTime: 2500,
         prevCell: ".prev",
         nextCell: ".next",
+        arrow: ".arrow",
         sizeDatas: [],
         centerX: 0,
         centerY: 0,
@@ -65,7 +75,7 @@
     var YScroll = function () {
         this.wrapper = '';
         this.CardNumber = 0; //生成点的个数, 根据外部的li个数来确定
-        this.arc = 360; //弧度: 默认360
+        this.arc = 360;     //弧度: 默认360
         this.cardWidth = this.cardHeight = 0, //卡片宽高
         this.sizeDatas = [];
     };
@@ -73,6 +83,7 @@
         conBox: null,
         nextBtn: null,
         prevBtn: null,
+        arrowD: null,
         timer: null,
         init: function (options) {
             this.settings = extend(defaults, options || {});
@@ -88,6 +99,7 @@
             self.conBox = $("ul li", wapperJQ);
             self.nextBtn = $(this.settings.nextCell,wapperJQ);
             self.prevBtn = $(this.settings.prevCell,wapperJQ);
+            self.arrowD =  $(this.settings.arrow,wapperJQ);
 
             this.cardWidth = self.conBox.width();
             this.cardHeight = self.conBox.height();
@@ -144,18 +156,19 @@
                     xCode = factor ? i : this.CardNumber - i;
 
                 switch (this.settings.style) {
-                    case 1: //尺寸系数 --1
+                    case 1: //尺寸系数 --1   默认
                         {
                             scaleX = 1 - xCode * (factor ? cose1 *= 0.9 : cose1 /= 0.92);
                         }
                         break;
-                    case 2://尺寸系数 --2 -对称   i太大会导致尺寸过小
+                    case 2://尺寸系数 --2 -左右对称   i太大 (圆弧描点 )会导致尺寸过小
                         {
                             scaleX = 1 - xCode * 0.12;
                             .2>scaleX && (scaleX = lastScale);
                             lastScale = scaleX;//防止尺寸太小
                         }
                 }
+           
                 var hudu = (Math.PI / 180) * (i * pnC),
                     x1 = this.settings.centerX - this.settings.a * Math.sin(hudu),
                     y1 = this.settings.centerY + (this.settings.b * Math.cos(hudu)),
@@ -189,11 +202,11 @@
             self.prevBtn && self.prevBtn.click(this.prevCad.bind(this));
             $(this.settings.wrapper).on({
                 mouseenter: function () {
-                    $('.arrow').css('display', 'block');
+                    self.arrowD.show();
                     clearInterval(ws.timer);
                 },
                 mouseleave: function () {
-                    $('.arrow').css('display', 'none');
+                    self.arrowD.hide();
                     ws.doPlay();
                 }
             })
